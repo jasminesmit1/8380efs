@@ -27,7 +27,7 @@ def customer_new(request):
            cust = form.save(commit=False)
            cust.created_date = timezone.now()
            cust.save()
-           customers = Customer.objects.filter(purchase_date__lte=timezone.now())
+           customers = Customer.objects.filter(created_date__lte=timezone.now())
            return render(request, 'portfolio/customer_list.html',
                          {'customers': customers})
    else:
