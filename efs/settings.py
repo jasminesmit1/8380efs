@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,13 +33,13 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'portfolio',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'portfolio',
     'crispy_forms',
     'django.contrib.postgres',
 ]
@@ -125,6 +126,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# Update database configuration with $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+DATABASES['default'] = dj_database_url.config()
 
 
 # Static files (CSS, JavaScript, Images)
