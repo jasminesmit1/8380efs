@@ -132,13 +132,14 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL ='/media/'
+MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/home'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mailgun.org'
 EMAIL_HOST_USER = 'postmaster@sandbox33ed30ad3c1c4211b3ce2ad56f1523a8.mailgun.org'
 EMAIL_HOST_PASSWORD = 'a8f268457ff1b53ae8a13cd7f3d388d2-af6c0cec-a6ce54f5'
@@ -148,7 +149,3 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 django_heroku.settings(locals())
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
