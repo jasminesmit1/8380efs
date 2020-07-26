@@ -38,13 +38,13 @@ class Investment(models.Model):
     recent_value = models.DecimalField(max_digits=10, decimal_places=2)
     recent_date = models.DateField(default=timezone.now, blank=True, null=True)
 
-    def created(self):
-        self.acquired_date = timezone.now()
-        self.save()
-
-    def updated(self):
-        self.recent_date = timezone.now()
-        self.save()
+    # def created(self):
+    #     self.recent_date = timezone.now()
+    #     self.save()
+    #
+    # def updated(self):
+    #     self.recent_date = timezone.now()
+    #     self.save()
 
     def __str__(self):
         return str(self.customer)
@@ -57,7 +57,7 @@ class Stock(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='stocks')
     symbol = models.CharField(max_length=10)
     name = models.CharField(max_length=50)
-    shares = models.DecimalField (max_digits=10, decimal_places=1)
+    shares = models.DecimalField(max_digits=10, decimal_places=1)
     purchase_price = models.DecimalField(max_digits=10, decimal_places=2)
     purchase_date = models.DateField(default=timezone.now, blank=True, null=True)
 
@@ -71,5 +71,16 @@ class Stock(models.Model):
     def initial_stock_value(self):
         return self.shares * self.purchase_price
 
+    def current_stock_price(self):
+        symbol_f = str(self.symbol)
+        main_api = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='
+        api_key = '&interval=1min&apikey=QK0VTF944TPKGWRO'
+        url = main_api + symbol_f + api_key
+        json_data = requests.get(url).json()
+        open_price = float(json_data["Global Quote"]["02. open"])
+        share_value = open_price
+        return share_value
 
+    def current_stock_value(self):
+        return float(self.current_stock_price()) * float(self.shares)
 

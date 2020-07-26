@@ -42,7 +42,6 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
-
                     <li><a class="nav-link lead" href="{% url 'logout' %}"><span class="fa fa-btn fa-sign-out"></span>Logout</a></li>
                 {% else %}
                     <li><a class="nav-link lead" href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
